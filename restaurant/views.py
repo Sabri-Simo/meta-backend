@@ -4,12 +4,12 @@ from .serializers import BookingSerializer, MenuSerializer
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from django.http import HttpRequest, HttpResponse
 
-# Create your views here.
 def index(request):
     return render(request, 'index.html', {})
 
-# Create your views here. 
+
 class MenuItemsView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Menu.objects.all()
@@ -24,3 +24,9 @@ class BookingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    
+def reservations(request:HttpRequest) -> HttpResponse:
+    date = request.GET.get('date',datetime.today().date())
+    bookings = Booking.objects.all()
+    booking_json = serializers.serialize('json', bookings)
+    return render(request, 'reservations.html',{"bookings":booking_json})
