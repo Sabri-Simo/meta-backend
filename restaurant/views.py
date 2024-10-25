@@ -25,6 +25,10 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     
+    
+def about(request):
+    return render(request, 'about.html')
+    
 def reservations(request:HttpRequest) -> HttpResponse:
     date = request.GET.get('date',datetime.today().date())
     bookings = Booking.objects.all()

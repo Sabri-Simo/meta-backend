@@ -9,6 +9,7 @@ router.register(r'tables', views.BookingViewSet)
 urlpatterns = [
     path('', views.index, name='index'),
     path('menu/', views.MenuItemsView.as_view()),
+     path('about/', views.about, name="about"),
     path('menu/<int:pk>', views.SingleMenuItemView.as_view()),
     path('booking/', include(router.urls)),
     path('reservations/', views.reservations, name="reservations"),
